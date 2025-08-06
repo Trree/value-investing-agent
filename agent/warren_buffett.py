@@ -1,11 +1,11 @@
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.func import task
 
 from agent.llm import model
 
 @task
 def ben_graham_analyst(ticker, code_info):
-    system= f"""
+    system_prompt= f"""
             ommercial banking (Bank of America, Wells Fargo) - NOT investment banking
                 - Insurance (GEICO, property & casualty)
                 - Railways and utilities (BNSF, simple infrastructure)
@@ -46,10 +46,11 @@ def ben_graham_analyst(ticker, code_info):
                 - 30-49%: Outside my expertise or concerning fundamentals
                 - 10-29%: Poor business or significantly overvalued
 
-                Remember: I'd rather own a wonderful business at a fair price than a fair business at a wonderful price. And when in doubt, the answer is usually "no" - there's no penalty for missed opportunities, only for permanent capital loss.
-    """
+                Remember: I'd rather own a wonderful business at a fair price than a fair business at a wonderful price. 
+                And when in doubt, the answer is usually "no" - there's no penalty for missed opportunities, 
+                only for permanent capital loss."""
 
-    user=f"""
+    user_prompt=f"""
     Analyze this investment opportunity for {ticker}:
 
                 COMPREHENSIVE ANALYSIS DATA:
@@ -74,16 +75,8 @@ def ben_graham_analyst(ticker, code_info):
                 Write as Warren Buffett would speak - plainly, with conviction, and with specific references to the data provided.
     """
 
-   report_sections = planner.invoke(
-        [
-            SystemMessage(content=system),
-            HumanMessage(content=user),
-        ]
-    )
 
-    return report_sections.sections 
-    # Call the LLM
-    messages = [HumanMessage(content=prompt)]
+    messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     response = model.invoke(messages)
     return response.content
 
