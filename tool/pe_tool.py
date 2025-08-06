@@ -2,6 +2,7 @@ import json
 from datetime import datetime, timedelta
 
 import baostock as bs
+from langgraph.func import task
 
 
 def get_recent_quarter(which_quarter):
@@ -29,6 +30,7 @@ def get_current_and_last_year():
     last_year = current_year - 1
     return current_year, last_year
 
+@task
 # 查询股票信息
 def get_stock_pe(code : str) -> str:
     """
