@@ -4,7 +4,7 @@ from langgraph.func import task
 from agent.llm import model
 
 @task
-def ben_graham_analyst(ticker, code_info):
+def warren_buffett_analyze(ticker, code_info):
     system_prompt= f"""
             ommercial banking (Bank of America, Wells Fargo) - NOT investment banking
                 - Insurance (GEICO, property & casualty)
