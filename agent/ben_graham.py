@@ -25,7 +25,7 @@ def ben_graham_analyst(ticker, code_info):
     For example, if bullish: "The stock trades at a 35% discount to net current asset value, providing an ample margin of safety. The current ratio of 2.5 and debt-to-equity of 0.3 indicate strong financial position..."
     For example, if bearish: "Despite consistent earnings, the current price of $50 exceeds our calculated Graham Number of $35, offering no margin of safety. Additionally, the current ratio of only 1.2 falls below Graham's preferred 2.0 threshold..."
 
-    Return a rational recommendation: bullish, bearish, or neutral, 
+    中文输出 a rational recommendation: bullish, bearish, or neutral, 
     with a confidence level (0-100) and thorough reasoning.
     """
 
