@@ -1,7 +1,9 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.func import task
+from langgraph.prebuilt import create_react_agent
 
-from agent.llm import model
+from llm import model
+
 
 @task
 def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyze, risk):
@@ -12,7 +14,8 @@ def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyz
     strategic investment advice. You are now working for
     a super important customer you need to impress.  
 
-    中文输出, 总结 ben-graham Analyst, warren_buffett Analyst and risk_assessment analyst 的重要的核心观点, Your final answer MUST be a recommendation for your customer.
+    中文输出,使用 markdown格式, 总结 ben-graham Analyst, warren_buffett Analyst 
+    and risk_assessment analyst 的重要的核心观点, Your final answer MUST be a recommendation for your customer.
     It should be a full super detailed report, providing a
     clear investment stance and strategy with supporting evidence.
     Make it pretty and well formatted for your customer.
@@ -32,11 +35,24 @@ def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyz
     trading activity, and upcoming events like earnings.
     """
 
-    
+    agent = create_react_agent(
+        model=model,
+        prompt=SystemMessage(content=system_prompt),
+        tools=[],
+        #config={"callbacks": [langfuse_handler]}
+    )
+
+    for chunk in agent.stream(
+        HumanMessage(content=user_prompt),
+        stream_mode="debug"
+    ):
+        print(chunk)
+        print("\n")
+
     # Call the LLM
-    messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
-    response = model.invoke(messages)
-    return response.content
+    # messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
+    # response = agent.invoke(messages)
+    # return response.content
 
 
 

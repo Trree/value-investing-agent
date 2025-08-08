@@ -1,7 +1,8 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.func import task
 
-from agent.llm import model
+from llm import model
+
 
 @task
 def risk_management_analyze(input_key):

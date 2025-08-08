@@ -1,37 +1,22 @@
-from langgraph.graph import StateGraph, START, END
-from typing_extensions import TypedDict
+from dotenv import load_dotenv
+from langgraph.func import entrypoint
 
-from agent.qeury_code import query_code_agent
+from agent.ben_graham import ben_graham_analyst
+from agent.investment_advisor import investment_advisor_analyze
+from agent.query_code import query_code_agent
+from agent.risk_management import risk_management_analyze
+from agent.warren_buffett import warren_buffett_analyze
 from tool.pe_tool import get_stock_pe
 
+load_dotenv()
 
-class State(TypedDict):
-    input_key: str
-    code: str
-    code_info: str
+@entrypoint()
+def orchestrator_worker(topic: str):
+    sections = query_code_agent(topic).result()
+    code_info = get_stock_pe(sections).result()
+    ben_analyze = ben_graham_analyst(topic, code_info)
+    buffett_analyze = warren_buffett_analyze(topic, code_info)
+    risk_analyze = risk_management_analyze(topic)
 
-def query_code(state: State):
-    input_key = state.get("input_key")
-    code = query_code_agent(input_key)
-    return {"code": code}
-
-def query_code_info(state: State):
-    code = state.get("code")
-    code_info = get_stock_pe(code)
-    return {"code_info": code_info}
-
-
-# 构建图表
-builder = StateGraph(State)
-builder.add_node("query_code", query_code)
-builder.add_node("query_code_info", query_code_info)
-
-# 连接逻辑
-builder.add_edge(START, "query_code")
-builder.add_edge("query_code", "query_code_info")
-builder.add_edge("query_code_info", END)
-
-# 编译
-graph = builder.compile()
-result = graph.invoke({"input_key" : "中远海控"})
-print(result)
+    analyze_result = investment_advisor_analyze(topic, code_info, ben_analyze, buffett_analyze, risk_analyze).result();
+    return analyze_result

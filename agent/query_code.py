@@ -1,7 +1,8 @@
 from langchain_core.messages import HumanMessage
 from langgraph.func import task
 
-from agent.llm import model
+from llm import model
+
 
 @task
 def query_code_agent(input_key):

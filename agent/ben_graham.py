@@ -1,7 +1,7 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.func import task
 
-from agent.llm import model
+from llm import model
 
 @task
 def ben_graham_analyst(ticker, code_info):
