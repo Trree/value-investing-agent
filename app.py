@@ -17,13 +17,15 @@ def orchestrator_worker(topic: str):
     code_info = get_skshare_info(sections).result()
     all_code_info = json.dumps(code_info, ensure_ascii=False)
     print(all_code_info)
+    #yield all_code_info
     ben_analyze = ben_graham_analyst(topic, all_code_info)
     buffett_analyze = warren_buffett_analyze(topic, all_code_info)
     risk_analyze = risk_management_analyze(topic, all_code_info)
 
-    analyze_result = investment_advisor_analyze(topic, ben_analyze.result(), 
+    print("start advisor")
+    advisor_result = investment_advisor_analyze(topic, ben_analyze.result(), 
             buffett_analyze.result(), risk_analyze.result()).result()
-    return analyze_result
+    return advisor_result
 
 
 if __name__ == '__main__':

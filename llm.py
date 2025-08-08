@@ -8,7 +8,7 @@ load_dotenv()
 if not os.getenv("DEEPSEEK_API_KEY"):
     os.environ["DEEPSEEK_API_KEY"] = getpass.getpass("Enter your DeepSeek API key: ")
 
-model =  ChatDeepSeek(model="deepseek-chat", temperature=0.1)
+model =  ChatDeepSeek(model="deepseek-chat", temperature=0.3)
 
-
+reasoner_model = ChatDeepSeek(model="deepseek-reasoner", temperature=0.1)
 

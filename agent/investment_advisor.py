@@ -2,8 +2,10 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.func import task
 from langgraph.prebuilt import create_react_agent
 
-from llm import model
+from llm import reasoner_model
 
+from dotenv import load_dotenv
+load_dotenv()
 
 @task
 def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
@@ -34,12 +36,12 @@ def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
     trading activity, and upcoming events like earnings.
     """
 
-    agent = create_react_agent(
-        model=model,
-        prompt=SystemMessage(content=system_prompt),
-        tools=[],
-        #config={"callbacks": [langfuse_handler]}
-    )
+    #agent = create_react_agent(
+    #    model=model,
+    #    prompt=SystemMessage(content=system_prompt),
+    #    tools=[],
+    #    #config={"callbacks": [langfuse_handler]}
+    #)
     #
     # for chunk in agent.stream(
     #     HumanMessage(content=user_prompt),
@@ -50,7 +52,7 @@ def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
 
     # Call the LLM
     messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
-    response = model.invoke(messages)
+    response = reasoner_model.invoke(messages)
     return response.content
 
 
