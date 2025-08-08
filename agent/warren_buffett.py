@@ -64,7 +64,7 @@ def warren_buffett_analyze(ticker, code_info):
                 Remember: I'd rather own a wonderful business at a fair price than a fair business at a wonderful price. 
                 And when in doubt, the answer is usually "no" - there's no penalty for missed opportunities, 
                 only for permanent capital loss.
-                中文输出结果
+                
                 """
 
     user_prompt=f"""
@@ -90,6 +90,7 @@ def warren_buffett_analyze(ticker, code_info):
                 7. How this compares to opportunities in your portfolio
 
                 Write as Warren Buffett would speak - plainly, with conviction, and with specific references to the data provided.
+                中文输出结果
     """
 
 

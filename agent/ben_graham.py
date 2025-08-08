@@ -35,7 +35,7 @@ def ben_graham_analyst(ticker, code_info):
         Analysis Data for {ticker}:
         {code_info}
     
-        Return JSON exactly in this format:
+        中文 Return JSON exactly in this format:
         {{
           "signal": "bullish" or "bearish" or "neutral",
           "confidence": float (0-100),

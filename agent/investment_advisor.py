@@ -25,8 +25,9 @@ def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyz
     user_prompt=f"""
     分析股票 {input_key}
 
-    Review and synthesize the analyses provided by the
-    {code_info}, ben-graham Analyst {ben_analyze}, warren_buffett Analyst {buffett_analyze} and risk_assessment analyst {risk}.
+    审阅并整合所提供的最新的数据分析(包含资产负债表,利润表,现金流量表)
+    {code_info}, 并且使用最新的日期数据, 结合 ben-graham Analyst {ben_analyze}, warren_buffett Analyst {buffett_analyze} 的核心投资原则.
+    and risk_assessment analyst {risk}.
     Combine these insights to form a comprehensive
     investment recommendation. You MUST Consider all aspects, including financial
     health, market sentiment, and qualitative data from EDGAR filings.
@@ -41,18 +42,18 @@ def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyz
         tools=[],
         #config={"callbacks": [langfuse_handler]}
     )
-
-    for chunk in agent.stream(
-        HumanMessage(content=user_prompt),
-        stream_mode="debug"
-    ):
-        print(chunk)
-        print("\n")
+    #
+    # for chunk in agent.stream(
+    #     HumanMessage(content=user_prompt),
+    #     stream_mode="debug"
+    # ):
+    #     print(chunk)
+    #     print("\n")
 
     # Call the LLM
-    # messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
-    # response = agent.invoke(messages)
-    # return response.content
+    messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
+    response = model.invoke(messages)
+    return response.content
 
 
 

@@ -10,11 +10,15 @@ app = FastAPI()
 async def root():
     return {"message": "Hello World"}
 
+@app.get("/query/sync/{name}")
+async def query_sync(name: str) :
+    return orchestrator_worker.stream(name)
+
 @app.get("/query/{name}")
 async def query(name: str) :
-    #return StreamingResponse(orchestrator_worker.stream(name, config={"callbacks": [langfuse_handler]}))
-    return orchestrator_worker.stream(name, config={"callbacks": [langfuse_handler]})
+    return orchestrator_worker.invoke(name, config={"callbacks": [langfuse_handler]})
 
 @app.get("/query/stream/{name}")
 async def query_stream(name: str) :
-    return StreamingResponse(orchestrator_worker.stream(name, config={"callbacks": [langfuse_handler]}))
+    # 目前不支持
+    return StreamingResponse(orchestrator_worker.stream(name))
