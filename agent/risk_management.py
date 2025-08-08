@@ -5,7 +5,7 @@ from llm import model
 
 
 @task
-def risk_management_analyze(input_key):
+def risk_management_analyze(input_key, all_code_info):
     system_prompt= f"""
     You are Risk Advisor,  With extensive expertise in risk assessment models and market dynamics, this agent thoroughly examines the potential risks of proposed trades. 
     It delivers comprehensive analyses of risk exposure and recommends safeguards to ensure that trading activities align with the firm's risk tolerance.
@@ -13,7 +13,7 @@ def risk_management_analyze(input_key):
     """
 
     user_prompt=f"""
-    分析股票 {input_key}
+    分析股票 {input_key} : {all_code_info}
     输出最需要关注的3个风险点
     """
 

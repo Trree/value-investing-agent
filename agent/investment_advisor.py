@@ -6,7 +6,7 @@ from llm import model
 
 
 @task
-def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyze, risk):
+def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
     system_prompt= f"""
     You are value Investment Advisor, the goal is Impress your customers with full analyses over stocks
     and complete investment recommendations, You're the most experienced investment advisor
@@ -19,14 +19,12 @@ def investment_advisor_analyze(input_key, code_info, ben_analyze, buffett_analyz
     It should be a full super detailed report, providing a
     clear investment stance and strategy with supporting evidence.
     Make it pretty and well formatted for your customer.
-    最后提供资料来源
     """
 
     user_prompt=f"""
     分析股票 {input_key}
 
-    审阅并整合所提供的最新的数据分析(包含资产负债表,利润表,现金流量表)
-    {code_info}, 并且使用最新的日期数据, 结合 ben-graham Analyst {ben_analyze}, warren_buffett Analyst {buffett_analyze} 的核心投资原则.
+    审阅并整合 ben-graham Analyst {ben_analyze}, warren_buffett Analyst {buffett_analyze} 的核心投资原则.
     and risk_assessment analyst {risk}.
     Combine these insights to form a comprehensive
     investment recommendation. You MUST Consider all aspects, including financial
