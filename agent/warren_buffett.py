@@ -1,7 +1,7 @@
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.func import task
 
-from llm import model
+from llm import get_model
 
 
 @task
@@ -95,7 +95,7 @@ def warren_buffett_analyze(ticker, code_info):
 
 
     messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
-    response = model.invoke(messages)
+    response = get_model().invoke(messages)
     print(response)
     return response.content
 

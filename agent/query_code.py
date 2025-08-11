@@ -1,7 +1,7 @@
 from langchain_core.messages import HumanMessage
 from langgraph.func import task
 
-from llm import model
+from llm import get_model
 
 
 @task
@@ -15,7 +15,7 @@ def query_code_agent(input_key):
     
     # Call the LLM
     messages = [HumanMessage(content=prompt)]
-    response = model.invoke(messages)
+    response = get_model().invoke(messages)
     return response.content
 
 

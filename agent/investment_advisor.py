@@ -3,7 +3,7 @@ from langgraph.func import task
 from langgraph.prebuilt import create_react_agent
 
 from llm import reasoner_model
-from llm import model
+from llm import get_model
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -52,7 +52,7 @@ def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
     print("start investment")
     messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     #response = reasoner_model.invoke(messages)
-    response = model.invoke(messages)
+    response = get_model().invoke(messages)
     return response.content
 
 
