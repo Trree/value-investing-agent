@@ -7,7 +7,7 @@ from agent.investment_advisor import investment_advisor_analyze
 from agent.query_code import query_code_agent
 from agent.risk_management import risk_management_analyze
 from agent.warren_buffett import warren_buffett_analyze
-from tool.akshare_tool import get_skshare_info
+from tool.akshare_tool import get_akshare_info
 from fuse import langfuse_handler
 
 load_dotenv()
@@ -15,7 +15,8 @@ load_dotenv()
 @entrypoint()
 def orchestrator_worker(topic: str):
     sections = query_code_agent(topic).result()
-    code_info = get_skshare_info(sections).result()
+    print(sections)
+    code_info = get_akshare_info(sections).result()
     all_code_info = json.dumps(code_info, ensure_ascii=False)
     print(all_code_info)
     #yield all_code_info

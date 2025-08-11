@@ -1,19 +1,25 @@
-import akshare as ak
-from langgraph.func import task
 import re
-import pandas as pd
-import json
+from functools import lru_cache
 
+import akshare as ak
+import pandas as pd
+from langgraph.func import task
+
+
+@lru_cache(maxsize=128)
 @task
 # 查询股票信息
-def get_skshare_info(symbol : str) :
+def get_akshare_info(symbol : str) :
     """
     Args:
         symbol: symbol="SH600000"; 证券代码，可以是 A 股个股代码，A 股场内基金代码，A 股指数，美股代码, 美股指数
     Returns:
-
     """
-    stock_individual_spot_xq_df = ak.stock_individual_spot_xq(symbol=symbol)
+    df_30_minute = ak.stock_zh_a_minute(symbol=symbol, period="30", adjust="")
+    latest_price = df_30_minute.iloc[-1].to_dict()
+    print(latest_price)
+
+    stock_individual_spot_xq_df = ak.stock_individual_spot_xq(symbol=symbol, timeout=3)
     stock_individual_map = stock_individual_spot_xq_df.set_index('item')['value'].to_dict()
     print(stock_individual_map)
     """
@@ -77,10 +83,12 @@ def get_skshare_info(symbol : str) :
 
     print(stock_financial_report_sina_df3.to_string(index=False))
 
-    return {"实时行情数据":stock_individual_map,
-            "分红信息" : fhps_detail_df.to_markdown(index=False),
-            "资产负债表" : stock_financial_map1,
-            "利润表":stock_financial2.to_markdown(index=False),
-            "现金流量表": stock_financial_map3}
+    return {
+        "最新价格": latest_price,
+        "实时行情数据":stock_individual_map,
+        "分红信息" : fhps_detail_df.to_markdown(index=False),
+        "资产负债表" : stock_financial_map1,
+        "利润表":stock_financial2.to_markdown(index=False),
+        "现金流量表": stock_financial_map3}
 
 

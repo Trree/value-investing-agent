@@ -3,6 +3,7 @@ from langgraph.func import task
 
 from llm import get_model
 
+
 @task
 def ben_graham_analyst(ticker, code_info):
 
