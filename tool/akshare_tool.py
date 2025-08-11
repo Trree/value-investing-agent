@@ -2,6 +2,7 @@ import akshare as ak
 from langgraph.func import task
 import re
 import pandas as pd
+import json
 
 @task
 # 查询股票信息
@@ -77,9 +78,9 @@ def get_skshare_info(symbol : str) :
     print(stock_financial_report_sina_df3.to_string(index=False))
 
     return {"实时行情数据":stock_individual_map,
-            "分红信息" : fhps_detail_df.to_json(force_ascii=False),
+            "分红信息" : fhps_detail_df.to_markdown(index=False),
             "资产负债表" : stock_financial_map1,
-            "利润表":stock_financial2.to_json(force_ascii=False),
+            "利润表":stock_financial2.to_markdown(index=False),
             "现金流量表": stock_financial_map3}
 
 

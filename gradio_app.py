@@ -12,7 +12,7 @@ def greet(name):
 
 with gr.Blocks() as demo:
     # 输出区域（Markdown 格式）
-    output = gr.Textbox(label="输出", interactive=False)
+    output = gr.Markdown(">", elem_classes="output-area")
 
     # 输入区域（输入框 + 内嵌箭头按钮）
     with gr.Row():

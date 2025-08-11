@@ -96,6 +96,7 @@ def warren_buffett_analyze(ticker, code_info):
 
     messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     response = model.invoke(messages)
+    print(response)
     return response.content
 
 

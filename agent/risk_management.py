@@ -21,6 +21,7 @@ def risk_management_analyze(input_key, all_code_info):
     # Call the LLM
     messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
     response = model.invoke(messages)
+    print(response)
     return response.content
 
 
