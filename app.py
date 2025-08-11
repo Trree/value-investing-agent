@@ -8,6 +8,7 @@ from agent.query_code import query_code_agent
 from agent.risk_management import risk_management_analyze
 from agent.warren_buffett import warren_buffett_analyze
 from tool.akshare_tool import get_skshare_info
+from fuse import langfuse_handler
 
 load_dotenv()
 
@@ -29,4 +30,4 @@ def orchestrator_worker(topic: str):
 
 
 if __name__ == '__main__':
-    print(orchestrator_worker.invoke("中远海控"))
+    print(orchestrator_worker.invoke("中远海控", config={"callbacks": [langfuse_handler]}))

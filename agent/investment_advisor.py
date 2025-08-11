@@ -3,6 +3,7 @@ from langgraph.func import task
 from langgraph.prebuilt import create_react_agent
 
 from llm import reasoner_model
+from llm import model
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -16,24 +17,21 @@ def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
     strategic investment advice. You are now working for
     a super important customer you need to impress.  
 
-    中文输出,使用 markdown格式, 总结 ben-graham Analyst, warren_buffett Analyst 
-    and risk_assessment analyst 的重要的核心观点, Your final answer MUST be a recommendation for your customer.
+    中文输出,使用 markdown格式, Your final answer MUST be a recommendation for your customer.
     It should be a full super detailed report, providing a
     clear investment stance and strategy with supporting evidence.
     Make it pretty and well formatted for your customer.
     """
 
     user_prompt=f"""
-    分析股票 {input_key}
-
     审阅并整合 ben-graham Analyst {ben_analyze}, warren_buffett Analyst {buffett_analyze} 的核心投资原则.
     and risk_assessment analyst {risk}.
     Combine these insights to form a comprehensive
-    investment recommendation. You MUST Consider all aspects, including financial
-    health, market sentiment, and qualitative data from EDGAR filings.
+    investment recommendation. 
 
     Make sure to include a section that shows insider
     trading activity, and upcoming events like earnings.
+    500字内输出最重要的建议
     """
 
     #agent = create_react_agent(
@@ -51,8 +49,10 @@ def investment_advisor_analyze(input_key, ben_analyze, buffett_analyze, risk):
     #     print("\n")
 
     # Call the LLM
+    print("start investment")
     messages = [SystemMessage(content=system_prompt), HumanMessage(content=user_prompt)]
-    response = reasoner_model.invoke(messages)
+    #response = reasoner_model.invoke(messages)
+    response = model.invoke(messages)
     return response.content
 
 
